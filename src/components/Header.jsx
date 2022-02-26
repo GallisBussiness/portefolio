@@ -1,20 +1,42 @@
 import  {FaHtml5,FaMobile,FaLaptop} from 'react-icons/fa'
 import {SiJavascript,SiFlutter,SiIonic,SiMongodb,SiRedis,SiMysql,SiDocker,SiKubernetes} from 'react-icons/si'
 import {FaReact,FaAngular,FaLaravel,FaNodeJs} from 'react-icons/fa'
-import {motion} from 'framer-motion'
+import {useAnimation, motion} from 'framer-motion'
+import { useInView } from "react-intersection-observer";
+import { useEffect } from 'react';
 function Header() {
 
   const skillvariant = {
     init: {
-      x:-1000,
       opacity: 0
     },
     anime: {
-      x:0,
       opacity: 1,
-      transition:{ type: 'spring',delay:1 }
+      transition :{
+        type:'spring',
+        when:'beforeChildren',
+        staggerChildren: 0.5
+      }
     }
   }
+  const skillchildvariant = {
+    init: {
+      y: - 50,
+      opacity: 0
+    },
+    anime: {
+      y:0,
+      opacity: 1,
+      scale:[.8,1.1,1]
+    }
+  }
+  const controls = useAnimation();
+const [ref, inView] = useInView();
+  useEffect(() => {
+    if (inView) {
+      controls.start("anime");
+    }
+  }, [controls, inView]);
 
   return (
     <>
@@ -81,9 +103,10 @@ function Header() {
   <div className="container text-center max-w-6xl px-4 mx-auto sm:px-20 md:px-32 lg:px-16">
   <h2 className="mb-8 text-4xl font-extrabold tracking-tight text-indigo-600 sm:text-5xl md:text-4xl lg:text-5xl xl:text-6xl">MES COMPETENCES</h2>
     <div className="flex flex-col space-y-2 items-center w-full">
-     <div className="flex flex-col md:flex-row space-y-2 w-full md:space-x-2">
+     <motion.div ref={ref}
+      animate={controls} variants={skillvariant} initial="init" className="flex flex-col md:flex-row space-y-2 w-full md:space-x-2">
 
-     <motion.div variant={skillvariant} initial="init" animate="anime" className="bg-white font-semibold flex flex-col rounded-3xl border shadow-lg p-5 w-full">
+     <motion.div variants={skillchildvariant} className="bg-white font-semibold flex flex-col rounded-3xl border shadow-lg p-5 w-full">
     <h2 className="mb-2 text-2xl font-extrabold tracking-tight sm:text-3xl md:text-2xl text-indigo-600 lg:text-3xl xl:text-3xl">&#60;<span className="text-black">WEB</span>/&#62;</h2>
       <div className="flex flex-col w-full px-5 items-center space-y-2">
       <div className="w-full flex items-center space-x-2">
@@ -134,7 +157,7 @@ function Header() {
       </div>
       </div>
    </motion.div>
-   <div className="bg-white font-semibold flex flex-col rounded-3xl border shadow-lg p-5 w-full">
+   <motion.div  variants={skillchildvariant} className="bg-white font-semibold flex flex-col rounded-3xl border shadow-lg p-5 w-full">
     <h2 className="mb-2 text-2xl font-extrabold tracking-tight sm:text-3xl md:text-2xl text-indigo-600 lg:text-3xl xl:text-3xl">&#60;<span className="text-black">MOBILE</span>/&#62;</h2>
       <div className="flex flex-col w-full px-5 items-center space-y-2">
       <div className="w-full flex items-center space-x-2">
@@ -157,10 +180,10 @@ function Header() {
        </div>
       </div>
       </div>
-   </div>
-   </div>
-   <div className="flex flex-col md:flex-row space-y-2 w-full md:space-x-2">
-   <div className="bg-white font-semibold flex flex-col rounded-3xl border shadow-lg p-5 w-full">
+   </motion.div>
+   </motion.div>
+   <motion.div  variants={skillvariant} initial="init" animate="anime" className="flex flex-col md:flex-row space-y-2 w-full md:space-x-2">
+   <motion.div  variants={skillchildvariant} className="bg-white font-semibold flex flex-col rounded-3xl border shadow-lg p-5 w-full">
     <h2 className="mb-2 text-2xl font-extrabold tracking-tight sm:text-3xl md:text-2xl text-indigo-600 lg:text-3xl xl:text-3xl">&#60;<span className="text-black">DESKTOP</span>/&#62;</h2>
       <div className="flex flex-col w-full px-5 items-center space-y-2">
       <div className="w-full flex items-center space-x-2">
@@ -183,8 +206,8 @@ function Header() {
        </div>
       </div>
       </div>
-   </div>
-   <div className="bg-white font-semibold flex flex-col rounded-3xl border shadow-lg p-5 w-full">
+   </motion.div>
+   <motion.div  variants={skillchildvariant} className="bg-white font-semibold flex flex-col rounded-3xl border shadow-lg p-5 w-full">
     <h2 className="mb-2 text-2xl font-extrabold tracking-tight sm:text-3xl md:text-2xl text-indigo-600 lg:text-3xl xl:text-3xl">&#60;<span className="text-black">DATABASE</span>/&#62;</h2>
       <div className="flex flex-col w-full px-5 items-center space-y-2">
       <div className="w-full flex items-center space-x-2">
@@ -216,8 +239,8 @@ function Header() {
        </div>
       </div>
       </div>
-   </div>
-   </div>
+   </motion.div>
+   </motion.div>
    <div className="bg-white font-semibold flex flex-col rounded-3xl border shadow-lg p-5 w-full">
     <h2 className="mb-2 text-2xl font-extrabold tracking-tight sm:text-3xl md:text-2xl text-indigo-600 lg:text-3xl xl:text-3xl">&#60;<span className="text-black">DEVOOPS</span>/&#62;</h2>
       <div className="flex flex-col w-full px-5 items-center space-y-2">
